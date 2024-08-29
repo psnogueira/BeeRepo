@@ -12,5 +12,6 @@ namespace Bee.Data
         {
         }
         public DbSet<Bee.Models.Department> Department { get; set; } = default!;
+        public DbSet<Bee.Models.WBS> WBS { get; set; } = default!;
     }
 }
