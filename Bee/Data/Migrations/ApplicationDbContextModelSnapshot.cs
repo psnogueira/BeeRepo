@@ -123,7 +123,7 @@ namespace Bee.Data.Migrations
 
                     b.HasKey("DepartmentId");
 
-                    b.ToTable("Department");
+                    b.ToTable("Department", (string)null);
                 });
 
             modelBuilder.Entity("Bee.Models.WBS", b =>
@@ -146,7 +146,7 @@ namespace Bee.Data.Migrations
 
                     b.HasKey("WBSId");
 
-                    b.ToTable("WBS");
+                    b.ToTable("WBS", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

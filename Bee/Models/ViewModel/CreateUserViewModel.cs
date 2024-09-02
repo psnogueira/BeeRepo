@@ -34,7 +34,7 @@ public class CreateUserViewModel
     public int DepartmentId { get; set; }
 
 
-    [Required(ErrorMessage = "O role é obrigatório.")]
+    [Required(ErrorMessage = "A role é obrigatória.")]
     [Display(Name = "Nível de Acesso")]
     public string? RoleId { get; set; }
 

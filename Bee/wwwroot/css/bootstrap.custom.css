@@ -59,6 +59,16 @@ body {
     border-color: #285e8e;
 }
 
+.btn-bee-navbar-dark {
+    color: #2A2A2A;
+}
+
+.btn-bee-navbar-dark:hover {
+    transition: 0.3s;
+    color: #FEEF0C;
+    border-color: #285e8e;
+}
+
 .btn-bee-logo {
     color: #FEEF0C;
 }

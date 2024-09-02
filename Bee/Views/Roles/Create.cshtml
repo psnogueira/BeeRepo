@@ -1,7 +1,8 @@
-﻿@model Bee.Models.Department
+﻿﻿@using Microsoft.AspNetCore.Identity
+@model IdentityRole
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Criar";
 }
 
 <div class="d-flex justify-content-between align-items-center position-relative">
@@ -9,12 +10,12 @@
         <a class="position-absolute top-0 mt-2 start-0 d-flex align-items-center gap-1 text-primary fs-5 text-decoration-none" asp-action="Index">
             <i class="bi bi-arrow-left-short fs-3"></i>Voltar
         </a>
-        <h1 class="mb-3 text-primary fw-bold">Criar novo departamento</h1>
+        <h1 class="mb-3 text-primary fw-bold">Criar novo Nível de Acesso</h1>
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-floating mb-3">
                 <input asp-for="Name" class="form-control" placeholder="nome" />
-                <label asp-for="Name" class="form-label text-secondary"></label>
+                <label asp-for="Name" class="form-label text-secondary">Nome</label>
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
