@@ -12,7 +12,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-bee-dark border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-bee-dark border-bottom rounded-lg rounded-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand btn-bee-logo" asp-area="" asp-controller="Home" asp-action="Index"><i class="bi bi-android"></i> Bee</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -28,10 +28,16 @@
                             <a class="nav-link btn-bee-navbar" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link btn-bee-navbar" asp-area="" asp-controller="Departments" asp-action="Index">Departamentos</a>
-                        </li>
-                        <li class="nav-item">
                             <a class="nav-link btn-bee-navbar" asp-area="" asp-controller="WBS" asp-action="Index">WBS</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light btn-bee-navbar" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Painel Admin
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Roles" asp-action="Index">Níveis de Acesso</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Departments" asp-action="Index">Departamentos</a>
+                            </ul>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
