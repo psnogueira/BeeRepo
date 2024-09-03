@@ -42,12 +42,12 @@
         <form class="col-5" asp-action="Index" method="get">
             <div class="form-actions input-group">
                 <input type="text" class="form-control" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por nome ou ID" id="autoComplete" data-table="Department" data-column1="DepartmentId" data-column2="Name" />
-                <input class="btn btn-outline-primary" type="submit" value="Procurar" />
-                <a class="btn btn-outline-primary align-content-center" asp-action="Index">Lista completa</a>
+                <input class="btn btn-bee-crud-outline" type="submit" value="Procurar" />
+                <a class="btn btn-bee-crud-outline align-content-center" asp-action="Index">Lista completa</a>
             </div>
         </form>
         <div class="col d-flex justify-content-end">
-            <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo departamento</a>
+            <a asp-action="Create" class="btn btn-bee-crud"><i class="bi bi-plus-lg"></i> Novo departamento</a>
         </div>
     </div>
 </div>
@@ -167,16 +167,16 @@
 <nav aria-label="Page navigation example" class="container mt-4">
     <ul class="pagination">
         <li class="page-item @(Model.DepartmentList.HasPreviousPage ? "" : "disabled")">
-            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.DepartmentList.PageIndex - 1)" asp-route-searchString="@Model.CurrentFilter">Anterior</a>
+            <a class="page-link pagination-bee-disabled" asp-action="Index" asp-route-pageNumber="@(Model.DepartmentList.PageIndex - 1)" asp-route-searchString="@Model.CurrentFilter">Anterior</a>
         </li>
         @for (int i = 1; i <= Model.DepartmentList.TotalPages; i++)
         {
             <li class="page-item @(i == Model.DepartmentList.PageIndex ? "active" : "")">
-                <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchString="@Model.CurrentFilter">@i</a>
+                <a class="page-link pagination-bee-disabled" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchString="@Model.CurrentFilter">@i</a>
             </li>
         }
         <li class="page-item @(Model.DepartmentList.HasNextPage ? "" : "disabled")">
-            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.DepartmentList.PageIndex + 1)" asp-route-searchString="@Model.CurrentFilter">Próxima</a>
+            <a class="page-link pagination-bee-disabled" asp-action="Index" asp-route-pageNumber="@(Model.DepartmentList.PageIndex + 1)" asp-route-searchString="@Model.CurrentFilter">Próxima</a>
         </li>
     </ul>
 </nav>

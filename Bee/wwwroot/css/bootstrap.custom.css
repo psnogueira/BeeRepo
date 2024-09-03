@@ -49,6 +49,29 @@ body {
     background-color: #5601b4;
 }
 
+.btn-bee-crud {
+    color: #fff;
+    background-color: #7202ED;
+}
+
+.btn-bee-crud:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    transition: 0.3s;
+    color: #fff;
+    background-color: #5601b4;
+}
+
+.btn-bee-crud-outline {
+    color: #7202ED;
+    background-color: #fff;
+    border-color: #7202ED;
+}
+
+.btn-bee-crud-outline:hover, .btn-primary:focus, .btn-primary:active, .btn-primary.active, .open > .dropdown-toggle.btn-primary {
+    transition: 0.3s;
+    color: #fff;
+    background-color: #7202ED;
+}
+
 .btn-bee-navbar {
     color: #fff;
 }
@@ -138,7 +161,26 @@ body {
     z-index: 2;
 }
 
+.pagination-bee-active {
+    background-color: #7202ED;
+    color: #fff;
+}
 
+.pagination-bee-disabled {
+    background-color: #fff;
+    color: #7202ED;
+}
+
+/* Cores Pagination*/
+
+.pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+    background-color: #7202ED;
+    border-color: #7202ED;
+}
+
+.pagination > a {
+    color: #7202ED;
+}
 
 
 .divider:after,

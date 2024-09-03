@@ -1,7 +1,7 @@
 ﻿@model Bee.Models.ViewModel.UserViewModel
 
 @{
-	ViewBag.Title = "Usuários";
+	ViewBag.Title = "Funcionários";
 }
 
 @if (TempData["SuccessMessage"] != null)
@@ -37,7 +37,7 @@
 }
 
 <div class="container mt-3">
-    <h1 class="fw-bold display-2 text-white mb-3">@ViewData["Title"]</h1>
+    <h1 class="fw-bold display-2 text-bee-dark mb-3">@ViewData["Title"]</h1>
     <div class="row justify-content-between my-3">
         <form class="col-7" asp-action="Index" method="get">
             <div class="form-actions input-group w-100">
@@ -45,12 +45,12 @@
                     <option value="0">Todos</option>
                 </select>
                 <input type="text" class="form-control w-25" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por código ou descrição" id="autoComplete" data-table="Users" data-column1="FirstName" data-column2="Email" />
-                <input class="btn btn-outline-primary" type="submit" value="Procurar" />
-                <a class="btn btn-outline-primary align-content-center" asp-action="Index">Lista completa</a>
+                <input class="btn btn-bee-crud-outline" type="submit" value="Procurar" />
+                <a class="btn btn-bee-crud-outline align-content-center" asp-action="Index">Lista completa</a>
             </div>
         </form>
         <div class="col d-flex justify-content-end">
-            <a asp-action="Create" class="btn btn-primary"><i class="bi bi-plus-lg"></i> Novo Usuário</a>
+            <a asp-action="Create" class="btn btn-bee-crud"><i class="bi bi-plus-lg"></i> Novo Usuário</a>
         </div>
     </div>
 </div>
@@ -225,16 +225,16 @@
 <nav aria-label="Page navigation example" class="container mt-4">
     <ul class="pagination">
         <li class="page-item @(Model.UsersList.HasPreviousPage ? "" : "disabled")">
-            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.UsersList.PageIndex - 1)" asp-route-searchString="@Model.CurrentFilter" asp-route-departmentType="@ViewData["DepartmentType"]">Anterior</a>
+            <a class="page-link pagination-bee-disabled" asp-action="Index" asp-route-pageNumber="@(Model.UsersList.PageIndex - 1)" asp-route-searchString="@Model.CurrentFilter" asp-route-departmentType="@ViewData["DepartmentType"]">Anterior</a>
         </li>
         @for (int i = 1; i <= Model.UsersList.TotalPages; i++)
         {
-            <li class="page-item @(i == Model.UsersList.PageIndex ? "active" : "")">
-                <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchString="@Model.CurrentFilter" asp-route-departmentType="@ViewData["DepartmentType"]">@i</a>
+            <li class="pagination-bee-disabled @(i == Model.UsersList.PageIndex ? "pagination-bee-active" : "")">
+                <a class="page-link pagination-bee-disabled" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchString="@Model.CurrentFilter" asp-route-departmentType="@ViewData["DepartmentType"]">@i</a>
             </li>
         }
         <li class="page-item @(Model.UsersList.HasNextPage ? "" : "disabled")">
-            <a class="page-link" asp-action="Index" asp-route-pageNumber="@(Model.UsersList.PageIndex + 1)" asp-route-searchString="@Model.CurrentFilter" asp-route-departmentType="@ViewData["DepartmentType"]">Próxima</a>
+            <a class="page-link pagination-bee-disabled" asp-action="Index" asp-route-pageNumber="@(Model.UsersList.PageIndex + 1)" asp-route-searchString="@Model.CurrentFilter" asp-route-departmentType="@ViewData["DepartmentType"]">Próxima</a>
         </li>
     </ul>
 </nav>
