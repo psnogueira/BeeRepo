@@ -4,6 +4,7 @@ using Bee.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Bee.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240904225837_SuppliersAndCompanies")]
+    partial class SuppliersAndCompanies
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -108,38 +111,6 @@ namespace Bee.Data.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("Bee.Models.Company", b =>
-                {
-                    b.Property<int>("CompanyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CompanyId"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)");
-
-                    b.Property<string>("CNPJ")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ContactInfo")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(127)
-                        .HasColumnType("nvarchar(127)");
-
-                    b.HasKey("CompanyId");
-
-                    b.ToTable("Company");
-                });
-
             modelBuilder.Entity("Bee.Models.Department", b =>
                 {
                     b.Property<int>("DepartmentId")
@@ -217,7 +188,8 @@ namespace Bee.Data.Migrations
 
                     b.Property<string>("CNPJ")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(14)
+                        .HasColumnType("nvarchar(14)");
 
                     b.Property<string>("ContactInfo")
                         .IsRequired()

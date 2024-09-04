@@ -14,7 +14,6 @@ namespace Bee.Models
 
         [Display(Name = "CNPJ")]
         [Required(ErrorMessage = "O CNPJ é obrigatório.")]
-        [StringLength(14, ErrorMessage = "O CNPJ da empresa não pode ter mais que 14 caracteres.")]
         public string CNPJ { get; set; }
 
         [Display(Name = "Informações de Contato")]
