@@ -13,5 +13,7 @@ namespace Bee.Data
         }
         public DbSet<Bee.Models.Department> Department { get; set; } = default!;
         public DbSet<Bee.Models.WBS> WBS { get; set; } = default!;
+        public DbSet<Bee.Models.ExpenseType> ExpenseType { get; set; } = default!;
+        public DbSet<Bee.Models.EventType> EventType { get; set; } = default!;
     }
 }
