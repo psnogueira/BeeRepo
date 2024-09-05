@@ -1,7 +1,40 @@
 ﻿@model IEnumerable<Bee.Models.EventType>
 
 @{
+    ViewData["Title"] = "Tipos de Evento";
+}
 
+@{
+    if (TempData["SuccessMessage"] != null)
+    {
+        <div class="sucesso">
+            <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
+                <i class="bi bi-check-lg fs-1 me-3"></i>
+                <div>
+                    <div class="alert-heading align-items-center">
+                        <strong class="me-4 pe-1">@TempData["SuccessMessage"]</strong>
+                        <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
+                    </div>
+                    Você pode encontrá-la na tabela.
+                </div>
+            </div>
+        </div>
+    }
+    if (TempData["SuccessMessage2"] != null)
+    {
+        <div class="sucesso">
+            <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
+                <i class="bi bi-check-lg fs-1 me-3"></i>
+                <div>
+                    <div class="alert-heading align-items-center">
+                        <strong class="me-4 pe-1">@TempData["SuccessMessage2"]</strong>
+                        <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
+                    </div>
+                    Você pode encontrá-la na tabela.
+                </div>
+            </div>
+        </div>
+    }
 }
 
 <!DOCTYPE html>
@@ -47,3 +80,10 @@
 </table>
 </body>
 </html>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+}

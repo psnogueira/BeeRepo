@@ -8,9 +8,9 @@ namespace Bee.Models.Enum
 {
     public enum EventStatus
     {
-        NotStarted = 0,
-        Ongoing = 1,
-        Finished = 2,
-        Canceled = 3
+        Aguardando = 0,
+        Em_Andamento = 1,
+        Encerrado = 2,
+        Cancelado = 3
     }
 }

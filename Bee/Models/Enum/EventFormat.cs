@@ -7,8 +7,8 @@ namespace Bee.Models.Enum
 {
     public enum EventFormat
     {
-        InPerson = 0,
+        Presencial = 0,
         Online = 1,
-        Hybrid = 2
+        Hibrido = 2
     }
 }

@@ -31,12 +31,11 @@ namespace Bee.Models
 
         [Display(Name = "Data de Início")]
         [Required(ErrorMessage = "Data de início do evento é obrigatória.")]
-        public string StartDate { get; set; }
+        public DateTime StartDate { get; set; }
 
         [Display(Name = "Data de Encerramento")]
         [Required(ErrorMessage = "Data de encerramento do evento é obrigatória.")]
-        [Compare("StartDate", ErrorMessage = "Data de encerramento deve ser posterior a data de início.")]
-        public string EndDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         [Display(Name = "Objetivo")]
         public string? Objective { get; set; }
@@ -66,6 +65,7 @@ namespace Bee.Models
 
         [Display(Name = "Orçamento Estimado")]
         [Column(TypeName = "decimal(18, 2)")]
+        [DisplayFormat(DataFormatString = "{0:0}", ApplyFormatInEditMode = true)]
         [Range(0, double.MaxValue, ErrorMessage = "O orçamento do evento não pode ser negativo.")]
         public decimal? Budget { get; set; }
     }
