@@ -20,9 +20,20 @@ namespace Bee.Controllers
         }
 
         // GET: HACATs
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.HACAT.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var hacat = from s in _context.HACAT
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                hacat = hacat.Where(r => r.Code.Contains(searchString) || (isNumericSearch && r.HACATId == searchId));
+            }
+
+            return View(await hacat.ToListAsync());
         }
 
         // GET: HACATs/Details/5
@@ -119,19 +130,14 @@ namespace Bee.Controllers
         // GET: HACATs/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var hacat = await _context.HACAT.FindAsync(id);
+            if (hacat != null)
             {
-                return NotFound();
+                _context.HACAT.Remove(hacat);
             }
 
-            var hACAT = await _context.HACAT
-                .FirstOrDefaultAsync(m => m.HACATId == id);
-            if (hACAT == null)
-            {
-                return NotFound();
-            }
-
-            return View(hACAT);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: HACATs/Delete/5
