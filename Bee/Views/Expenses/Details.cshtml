@@ -1,0 +1,42 @@
+﻿@model Bee.Models.Expense
+
+@{
+    ViewData["Title"] = "Informações";
+}
+
+<div class="container mt-3">
+    <h1 class="fw-bold display-2 text-bee-dark mb-3">@ViewData["Title"]</h1>
+    <hr />
+</div>
+
+<div>
+    <h4 class="mb-3">Despesa</h4>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.SupplierId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SupplierId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.ExpenseTypeId)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.ExpenseTypeId)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Value)
+        </dt>
+        <dd class="col-sm-10">
+            R$ @Html.DisplayFor(model => model.Value)
+        </dd>
+    </dl>
+</div>
+<div class="pt-2">
+    <a class="pl-3 btn btn-bee-crud text-decoration-none" asp-action="Index">
+        <i class="bi bi-arrow-left-short"></i>Voltar
+    </a>
+    <a class="btn btn-bee-crud text-decoration-none" asp-action="Edit" asp-route-id="@Model?.ExpenseId">
+        <i class="bi bi-pen"></i> Editar
+    </a>
+</div>

@@ -19,6 +19,7 @@ namespace Bee.Models
         public int ExpenseTypeId { get; set; }
 
         [Display(Name = "Valor")]
+        [DisplayFormat(DataFormatString = "{0:N0}", ApplyFormatInEditMode = true)]
         [Required(ErrorMessage = "O Valor é obrigatório.")]
         [Column(TypeName = "decimal(18, 2)")]
         [Range(0, double.MaxValue, ErrorMessage = "O orçamento do evento não pode ser negativo.")]

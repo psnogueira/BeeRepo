@@ -20,5 +20,6 @@ namespace Bee.Data
         public DbSet<Bee.Models.HACAT> HACAT { get; set; } = default!;
         public DbSet<Bee.Models.Franchise> Franchise { get; set; } = default!;
         public DbSet<Bee.Models.Event> Event { get; set; } = default!;
+        public DbSet<Bee.Models.Expense> Expense { get; set; } = default!;
     }
 }
