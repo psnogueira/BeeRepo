@@ -20,9 +20,20 @@ namespace Bee.Controllers
         }
 
         // GET: Franchises
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Franchise.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var franchise = from s in _context.Franchise
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                franchise = franchise.Where(r => r.Name.Contains(searchString) || (isNumericSearch && r.FranchiseId == searchId));
+            }
+
+            return View(await franchise.ToListAsync());
         }
 
         // GET: Franchises/Details/5
@@ -119,19 +130,14 @@ namespace Bee.Controllers
         // GET: Franchises/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var franchise = await _context.Franchise.FindAsync(id);
+            if (franchise != null)
             {
-                return NotFound();
+                _context.Franchise.Remove(franchise);
             }
 
-            var franchise = await _context.Franchise
-                .FirstOrDefaultAsync(m => m.FranchiseId == id);
-            if (franchise == null)
-            {
-                return NotFound();
-            }
-
-            return View(franchise);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Franchises/Delete/5
