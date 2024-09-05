@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bee.Data;
 using Bee.Models;
+using Bee.Models.ViewModel;
 
 namespace Bee.Controllers
 {
@@ -20,9 +21,20 @@ namespace Bee.Controllers
         }
 
         // GET: Events
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Event.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var _event = from s in _context.Event
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                _event = _event.Where(r => r.Name.Contains(searchString) || (isNumericSearch && r.EventId == searchId));
+            }
+
+            return View(await _event.ToListAsync());
         }
 
         // GET: Events/Details/5
@@ -119,19 +131,14 @@ namespace Bee.Controllers
         // GET: Events/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var _event = await _context.Event.FindAsync(id);
+            if (_event != null)
             {
-                return NotFound();
+                _context.Event.Remove(_event);
             }
 
-            var @event = await _context.Event
-                .FirstOrDefaultAsync(m => m.EventId == id);
-            if (@event == null)
-            {
-                return NotFound();
-            }
-
-            return View(@event);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Events/Delete/5

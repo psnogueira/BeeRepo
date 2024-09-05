@@ -38,6 +38,10 @@ body {
     color: #334EAC;
 }
 
+.font-size-bee-fs-small {
+    font-size: 0.75rem;
+}
+
 .btn-bee-login {
     color: #fff;
     background-color: #7202ED;
