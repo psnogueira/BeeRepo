@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -131,19 +133,14 @@ namespace Bee.Controllers
         // GET: EventTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var eventType = await _context.EventType.FindAsync(id);
+            if (eventType != null)
             {
-                return NotFound();
+                _context.EventType.Remove(eventType);
             }
 
-            var eventType = await _context.EventType
-                .FirstOrDefaultAsync(m => m.EventTypeId == id);
-            if (eventType == null)
-            {
-                return NotFound();
-            }
-
-            return View(eventType);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: EventTypes/Delete/5
