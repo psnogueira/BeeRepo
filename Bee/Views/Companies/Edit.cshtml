@@ -1,0 +1,51 @@
+﻿@model Bee.Models.Company
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<div class="d-flex justify-content-between align-items-center position-relative">
+    <div class="col-md-5 d-flex flex-column justify-content-evenly ">
+        <a class="top-0 mt-2 start-0 d-flex align-items-center gap-1 text-bee-purple fs-5 text-decoration-none" asp-action="Index">
+            <i class="bi bi-arrow-left-short fs-3"></i>Voltar
+        </a>
+        <h1 class="mb-3 text-bee-purple fw-bold">Editar Empresa</h1>
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="CompanyId" />
+            <div class="form-floating mb-3">
+                <input asp-for="Name" class="form-control" placeholder="nome" />
+                <label asp-for="Name" class="form-label text-secondary"></label>
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="CNPJ" class="form-control" placeholder="Descrição" />
+                <label asp-for="CNPJ" class="form-label text-secondary"></label>
+                <span asp-validation-for="CNPJ" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="ContactInfo" class="form-control" placeholder="Descrição" />
+                <label asp-for="ContactInfo" class="form-label text-secondary"></label>
+                <span asp-validation-for="ContactInfo" class="text-danger"></span>
+            </div>
+            <div class="form-floating mb-3">
+                <input asp-for="Address" class="form-control" placeholder="Descrição" />
+                <label asp-for="Address" class="form-label text-secondary"></label>
+                <span asp-validation-for="Address" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Salvar" class="btn btn-lg btn-bee-crud w-100 fw-bold" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <img class=" w-100" src="~/img/artSq.jpg" alt="Arte decorativa" />
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

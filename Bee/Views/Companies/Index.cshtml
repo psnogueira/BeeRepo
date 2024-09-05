@@ -1,0 +1,154 @@
+﻿@model IEnumerable<Bee.Models.Company>
+
+@{
+    ViewData["Title"] = "Empresas";
+}
+
+@{
+    if (TempData["SuccessMessage"] != null)
+    {
+        <div class="sucesso">
+            <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
+                <i class="bi bi-check-lg fs-1 me-3"></i>
+                <div>
+                    <div class="alert-heading align-items-center">
+                        <strong class="me-4 pe-1">@TempData["SuccessMessage"]</strong>
+                        <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
+                    </div>
+                    Você pode encontrá-la na tabela.
+                </div>
+            </div>
+        </div>
+    }
+    if (TempData["SuccessMessage2"] != null)
+    {
+        <div class="sucesso">
+            <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
+                <i class="bi bi-check-lg fs-1 me-3"></i>
+                <div>
+                    <div class="alert-heading align-items-center">
+                        <strong class="me-4 pe-1">@TempData["SuccessMessage2"]</strong>
+                        <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
+                    </div>
+                    Você pode encontrá-la na tabela.
+                </div>
+            </div>
+        </div>
+    }
+}
+
+<div class="container mt-3">
+    <h1 class="fw-bold display-2 text-bee-dark mb-3">@ViewData["Title"]</h1>
+    <div class="row my-3">
+        <form class="col-5" asp-action="Index" method="get">
+            <div class="form-actions input-group">
+                <input type="text" class="form-control col-3" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por Nome" id="autoComplete" data-table="EventTypes" data-column1="Name" data-column2="" />
+                <input class="btn btn-bee-crud-outline" type="submit" value="Procurar" />
+                <a class="btn btn-bee-crud-outline align-content-center" asp-action="Index">Lista completa</a>
+            </div>
+        </form>
+        <div class="col d-flex justify-content-end">
+            <a asp-action="Create" class="btn btn-bee-crud"><i class="bi bi-plus-lg"></i> Nova Empresa</a>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="bg-white container rounded table-responsive mb-5">
+        <table class="table text-center align-middle">
+            <thead>
+                <tr>
+                    <th class="col-2">Nome</th>
+                    <th class="col-2">CNPJ</th>
+                    <th class="col-3">Informações de Contato</th>
+                    <th class="col-3">Endereço</th>
+                    <th class="col-2">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Name)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CNPJ)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ContactInfo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Address)
+                        </td>
+                        <td>
+                            <a class="fs-5 text-bee-purple" asp-action="Edit" asp-route-id="@item.CompanyId"><i class="bi bi-pen"></i></a>
+                            <a class="fs-5 text-bee-purple mx-2" asp-action="Details" asp-route-id="@item.CompanyId"><i class="bi bi-info-circle"></i></a>
+                            @*  *@
+                            <a type="button" class="fs-5 text-bee-purple" data-bs-toggle="modal" data-bs-target="#delete-@item.CompanyId" data-task-id="@item.CompanyId">
+                                <i class="bi bi-trash3"></i>
+                            </a>
+                        </td>
+                    </tr>
+
+                    @* Delete Modal *@
+                    <div class="modal fade" id="delete-@item.CompanyId" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header align-items-center">
+                                    <h3 class="text-bee-purple fw-bold ">Deletar Tipo de Evento</h3>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <h4>Tem certeza de que deseja deletar?</h4>
+                                    <p class="text-danger lh-1 mb-4">*Esta operação não poderá ser desfeita*</p>
+                                    <dl class="row">
+                                        <dt class="col-sm-3">
+                                            Id
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(modelItem => item.CompanyId)
+                                        </dd>
+                                        <dt class="col-sm-3">
+                                            Nome
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(modelItem => item.Name)
+                                        </dd>
+                                        <dt class="col-sm-3">
+                                            CNPJ
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(modelItem => item.CNPJ)
+                                        </dd>
+                                        <dt class="col-sm-3">
+                                            Informações de Contato
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(modelItem => item.ContactInfo)
+                                        </dd>
+                                        <dt class="col-sm-3">
+                                            Endereço
+                                        </dt>
+                                        <dd class="col-sm-10">
+                                            @Html.DisplayFor(modelItem => item.Address)
+                                        </dd>
+                                    </dl>
+                                </div>
+                                <div class="modal-footer">
+                                    <a type="button" class="btn btn-lg btn-danger w-100 fw-bold" asp-action="Delete" asp-route-id="@item.CompanyId">Deletar</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

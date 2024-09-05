@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/bootstrap.custom.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Bee.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
 </head>
 <body>
     <header>
@@ -20,15 +21,39 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link btn-bee-navbar" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-bee-navbar" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light btn-bee-navbar" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Gestão e Controles
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Franchises" asp-action="Index">Franquias</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="HACATs" asp-action="Index">Códigos HACAT</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Suppliers" asp-action="Index">Fornecedores</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Companies" asp-action="Index">Empresas</a>
+                            </ul>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link btn-bee-navbar" asp-area="" asp-controller="WBS" asp-action="Index">WBS</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light btn-bee-navbar" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Eventos & Despesas
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="EventTypes" asp-action="Index">Tipos de Evento</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="ExpenseTypes" asp-action="Index">Tipos de Despesas</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Events" asp-action="Index">Eventos</a>
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Expenses" asp-action="Index">Despesas</a>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-light btn-bee-navbar" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Relatórios
+                            </a>
+                            <ul class="dropdown-menu">
+                                <a class="nav-link btn-bee-navbar-dark" asp-area="" asp-controller="Reports" asp-action="PowerBIReport"><i class="bi bi-file-earmark-bar-graph"></i> Power BI</a>
+                            </ul>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light btn-bee-navbar" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,6 +83,7 @@
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
