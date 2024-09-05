@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bee.Data;
 using Bee.Models;
+using System.Data;
 
 namespace Bee.Controllers
 {
@@ -20,9 +21,20 @@ namespace Bee.Controllers
         }
 
         // GET: EventTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.EventType.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var eventType = from s in _context.EventType
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                eventType = eventType.Where(r => r.Name.Contains(searchString) || (isNumericSearch && r.EventTypeId == searchId));
+            }
+
+            return View(await eventType.ToListAsync());
         }
 
         // GET: EventTypes/Details/5
