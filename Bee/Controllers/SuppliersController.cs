@@ -20,9 +20,20 @@ namespace Bee.Controllers
         }
 
         // GET: Suppliers
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Supplier.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var supplier = from s in _context.Supplier
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                supplier = supplier.Where(r => r.Name.Contains(searchString) || (isNumericSearch && r.SupplierId == searchId));
+            }
+
+            return View(await supplier.ToListAsync());
         }
 
         // GET: Suppliers/Details/5
@@ -119,19 +130,14 @@ namespace Bee.Controllers
         // GET: Suppliers/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var supplier = await _context.Supplier.FindAsync(id);
+            if (supplier != null)
             {
-                return NotFound();
+                _context.Supplier.Remove(supplier);
             }
 
-            var supplier = await _context.Supplier
-                .FirstOrDefaultAsync(m => m.SupplierId == id);
-            if (supplier == null)
-            {
-                return NotFound();
-            }
-
-            return View(supplier);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Suppliers/Delete/5
