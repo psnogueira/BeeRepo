@@ -20,9 +20,20 @@ namespace Bee.Controllers
         }
 
         // GET: ExpenseTypes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.ExpenseType.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var eventType = from s in _context.ExpenseType
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                eventType = eventType.Where(r => r.Name.Contains(searchString) || (isNumericSearch && r.ExpenseTypeId == searchId));
+            }
+
+            return View(await eventType.ToListAsync());
         }
 
         // GET: ExpenseTypes/Details/5
@@ -119,19 +130,14 @@ namespace Bee.Controllers
         // GET: ExpenseTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var expenseType = await _context.ExpenseType.FindAsync(id);
+            if (expenseType != null)
             {
-                return NotFound();
+                _context.ExpenseType.Remove(expenseType);
             }
 
-            var expenseType = await _context.ExpenseType
-                .FirstOrDefaultAsync(m => m.ExpenseTypeId == id);
-            if (expenseType == null)
-            {
-                return NotFound();
-            }
-
-            return View(expenseType);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: ExpenseTypes/Delete/5
