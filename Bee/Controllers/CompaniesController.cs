@@ -20,9 +20,20 @@ namespace Bee.Controllers
         }
 
         // GET: Companies
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string searchString)
         {
-            return View(await _context.Company.ToListAsync());
+            ViewData["CurrentFilter"] = searchString;
+            var company = from s in _context.Company
+                            select s;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                int searchId;
+                bool isNumericSearch = int.TryParse(searchString, out searchId);
+
+                company = company.Where(r => r.Name.Contains(searchString) || (isNumericSearch && r.CompanyId == searchId));
+            }
+
+            return View(await company.ToListAsync());
         }
 
         // GET: Companies/Details/5
@@ -119,19 +130,14 @@ namespace Bee.Controllers
         // GET: Companies/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            var company = await _context.Company.FindAsync(id);
+            if (company != null)
             {
-                return NotFound();
+                _context.Company.Remove(company);
             }
 
-            var company = await _context.Company
-                .FirstOrDefaultAsync(m => m.CompanyId == id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-
-            return View(company);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // POST: Companies/Delete/5
