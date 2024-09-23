@@ -55,7 +55,7 @@ namespace Bee.Models
         [Display(Name = "Formato do Evento")]
         public EventFormat? Format { get; set; }
 
-        [Display(Name = "Cidade")]
+        [Display(Name = "Estado")]
         [Required(ErrorMessage = "Cidade do evento é obrigatória.")]
         public string City { get; set; }
 
