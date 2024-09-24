@@ -4,54 +4,99 @@
     ViewData["Title"] = "Empresas";
 }
 
+@using System.Data
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    function bs_input_file(){
+        $(".input-file").before(
+            function () {
+                if(!$(this).prev().hasClass('input-ghost')){
+                    var element = $("<input type='file' id='dataFile' name='upload' class='input-ghost' style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function() {
+						$(this).parents(".input-file").prev().click();
+						return false;
+					});
+                    return element;
+                }
+            }
+        )
+    }
+
+    function clear() {
+        var input=$("#dataFile").val('');
+    }
+
+    $(function () {
+        clear();
+		bs_input_file();
+	});
+</script>
+
 @{
     if (TempData["SuccessMessage"] != null)
     {
-        <div class="sucesso">
-            <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
-                <i class="bi bi-check-lg fs-1 me-3"></i>
-                <div>
-                    <div class="alert-heading align-items-center">
-                        <strong class="me-4 pe-1">@TempData["SuccessMessage"]</strong>
-                        <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
-                    </div>
-                    Você pode encontrá-la na tabela.
-                </div>
-            </div>
-        </div>
+                            <div class="sucesso">
+                                <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
+                                    <i class="bi bi-check-lg fs-1 me-3"></i>
+                                    <div>
+                                        <div class="alert-heading align-items-center">
+                                            <strong class="me-4 pe-1">@TempData["SuccessMessage"]</strong>
+                                            <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
+                                        </div>
+                                        Você pode encontrá-la na tabela.
+                                    </div>
+                                </div>
+                            </div>
     }
     if (TempData["SuccessMessage2"] != null)
     {
-        <div class="sucesso">
-            <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
-                <i class="bi bi-check-lg fs-1 me-3"></i>
-                <div>
-                    <div class="alert-heading align-items-center">
-                        <strong class="me-4 pe-1">@TempData["SuccessMessage2"]</strong>
-                        <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
-                    </div>
-                    Você pode encontrá-la na tabela.
-                </div>
-            </div>
-        </div>
+                            <div class="sucesso">
+                                <div class="alert alert-success d-flex align-items-center shadow alert-dismissible fade show position-fixed bottom-0 end-0 p-3 m-3 rounded" role="alert">
+                                    <i class="bi bi-check-lg fs-1 me-3"></i>
+                                    <div>
+                                        <div class="alert-heading align-items-center">
+                                            <strong class="me-4 pe-1">@TempData["SuccessMessage2"]</strong>
+                                            <small type="button" class="btn-close align-items-center" data-bs-dismiss="alert" aria-label="Close"></small>
+                                        </div>
+                                        Você pode encontrá-la na tabela.
+                                    </div>
+                                </div>
+                            </div>
     }
 }
 
 <div class="container mt-3">
     <h1 class="fw-bold display-2 text-bee-dark mb-3">@ViewData["Title"]</h1>
-    <div class="row my-3">
-        <form class="col-5" asp-action="Index" method="get">
-            <div class="form-actions input-group">
-                <input type="text" class="form-control col-3" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por Nome" id="autoComplete" data-table="EventTypes" data-column1="Name" data-column2="" />
-                <input class="btn btn-bee-crud-outline" type="submit" value="Procurar" />
-                <a class="btn btn-bee-crud-outline align-content-center" asp-action="Index">Lista completa</a>
+    <div class=" my-3">
+        <div class="row align-items-end">
+            <form class="col-5" asp-action="Index" method="get">
+                <div class="form-actions input-group">
+                    <input type="text" class="form-control col-3" name="SearchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por Nome" id="autoComplete" data-table="EventTypes" data-column1="Name" data-column2="" />
+                    <input class="btn btn-bee-crud-outline" type="submit" value="Procurar" />
+                    <a class="btn btn-bee-crud-outline align-content-center" asp-action="Index">Lista completa</a>
+                </div>
+            </form>
+            <div class="col d-flex justify-content-end">
+                <a asp-action="Import" class="btn btn-success"><i class="bi bi-cloud-arrow-up"></i> Importar dados</a>
             </div>
-        </form>
-        <div class="col d-flex justify-content-end">
-            <a asp-action="Create" class="btn btn-bee-crud"><i class="bi bi-plus-lg"></i> Nova Empresa</a>
+            <div class="col d-flex justify-content-end">
+                <a asp-action="Create" class="btn btn-bee-crud"><i class="bi bi-plus-lg"></i> Nova Empresa</a>
+            </div>
         </div>
     </div>
 </div>
+
+
 
 <div class="container">
     <div class="bg-white container rounded table-responsive mb-5">

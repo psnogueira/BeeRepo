@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bee.Data;
 using Bee.Models;
+using System.Text;
+using ExcelDataReader;
+using System.Data;
+using System.Diagnostics;
+using Bee.Repository;
 
 namespace Bee.Controllers
 {
@@ -14,9 +19,14 @@ namespace Bee.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public FranchisesController(ApplicationDbContext context)
+        private IWebHostEnvironment _webHostEnvironment;
+        private readonly IFranchise _franchise;
+
+        public FranchisesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, IFranchise franchise)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+            _franchise = franchise;
         }
 
         // GET: Franchises
@@ -34,6 +44,28 @@ namespace Bee.Controllers
             }
 
             return View(await franchise.ToListAsync());
+        }
+
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        public IActionResult ImportConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ImportConfirmation(IFormFile formFile)
+        {
+            string path = _franchise.DocumentUpload(formFile);
+            DataTable dt = _franchise.FranchiseDataTable(path);
+            _franchise.ImportFranchise(dt);
+
+            //return RedirectToAction(nameof(Index));
+
+            return View();
         }
 
         // GET: Franchises/Details/5

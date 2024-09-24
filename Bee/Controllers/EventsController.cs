@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bee.Data;
 using Bee.Models;
+using System.Text;
+using ExcelDataReader;
+using System.Data;
+using System.Diagnostics;
+using Bee.Repository;
 using Bee.Models.ViewModel;
 
 namespace Bee.Controllers
@@ -15,9 +20,14 @@ namespace Bee.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public EventsController(ApplicationDbContext context)
+        private IWebHostEnvironment _webHostEnvironment;
+        private readonly IEvent _event;
+
+        public EventsController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, IEvent f_event)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+            _event = f_event;
         }
 
         // GET: Events
@@ -35,6 +45,28 @@ namespace Bee.Controllers
             }
 
             return View(await _event.ToListAsync());
+        }
+
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        public IActionResult ImportConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ImportConfirmation(IFormFile formFile)
+        {
+            string path = _event.DocumentUpload(formFile);
+            DataTable dt = _event.EventDataTable(path);
+            _event.ImportEvent(dt);
+
+            //return RedirectToAction(nameof(Index));
+
+            return View();
         }
 
         // GET: Events/Details/5

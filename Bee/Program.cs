@@ -1,5 +1,6 @@
 using Bee.Data;
 using Bee.Models;
+using Bee.Repository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +12,14 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
-// Substitui AddDefaultIdentity por AddIdentity que é uma forma mais detalhada possibilitando habilitar o gerencimaneto de Roles e usa como base ApplicationUser em vez de IdentityUser
+// Add services to the container for import data from Excel file to database.
+builder.Services.AddScoped<ICompany, CompanyDetail>();
+builder.Services.AddScoped<IFranchise, FranchiseDetail>();
+builder.Services.AddScoped<ISupplier, SupplierDetail>();
+builder.Services.AddScoped<IEvent, EventDetail>();
+builder.Services.AddScoped<IExpense, ExpenseDetail>();
 
+// Substitui AddDefaultIdentity por AddIdentity que é uma forma mais detalhada possibilitando habilitar o gerencimaneto de Roles e usa como base ApplicationUser em vez de IdentityUser
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>()
