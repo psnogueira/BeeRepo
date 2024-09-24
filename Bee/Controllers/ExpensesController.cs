@@ -7,6 +7,11 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bee.Data;
 using Bee.Models;
+using System.Text;
+using ExcelDataReader;
+using System.Data;
+using System.Diagnostics;
+using Bee.Repository;
 
 namespace Bee.Controllers
 {
@@ -14,9 +19,14 @@ namespace Bee.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public ExpensesController(ApplicationDbContext context)
+        private IWebHostEnvironment _webHostEnvironment;
+        private readonly IExpense _expense;
+
+        public ExpensesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, IExpense expense)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+            _expense = expense;
         }
 
         // GET: Expenses
@@ -34,6 +44,28 @@ namespace Bee.Controllers
             }
 
             return View(await expense.ToListAsync());
+        }
+
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        public IActionResult ImportConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ImportConfirmation(IFormFile formFile)
+        {
+            string path = _expense.DocumentUpload(formFile);
+            DataTable dt = _expense.ExpenseDataTable(path);
+            _expense.ImportExpense(dt);
+
+            //return RedirectToAction(nameof(Index));
+
+            return View();
         }
 
         // GET: Expenses/Details/5
