@@ -5,6 +5,44 @@
     ViewData["Title"] = "Franquias";
 }
 
+@using System.Data
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<script>
+    function bs_input_file(){
+        $(".input-file").before(
+            function () {
+                if(!$(this).prev().hasClass('input-ghost')){
+                    var element = $("<input type='file' id='dataFile' name='upload' class='input-ghost' style='visibility:hidden; height:0'>");
+                    element.attr("name", $(this).attr("name"));
+                    element.change(function () {
+                        element.next(element).find('input').val((element.val()).split('\\').pop());
+                    });
+                    $(this).find("button.btn-choose").click(function () {
+                        element.click();
+                    });
+                    $(this).find('input').css("cursor", "pointer");
+                    $(this).find('input').mousedown(function() {
+                        $(this).parents(".input-file").prev().click();
+                        return false;
+                    });
+                    return element;
+                }
+            }
+        )
+    }
+
+    function clear() {
+        var input=$("#dataFile").val('');
+    }
+
+    $(function () {
+        clear();
+        bs_input_file();
+    });
+</script>
+
 @{
     if (TempData["SuccessMessage"] != null)
     {
@@ -48,6 +86,9 @@
                 <a class="btn btn-bee-crud-outline align-content-center" asp-action="Index">Lista completa</a>
             </div>
         </form>
+        <div class="col d-flex justify-content-end">
+            <a asp-action="Import" class="btn btn-success"><i class="bi bi-cloud-arrow-up"></i> Importar dados</a>
+        </div>
         <div class="col d-flex justify-content-end">
             <a asp-action="Create" class="btn btn-bee-crud"><i class="bi bi-plus-lg"></i> Nova Franquia</a>
         </div>

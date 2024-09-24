@@ -7,16 +7,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Bee.Data;
 using Bee.Models;
+using System.Text;
+using ExcelDataReader;
+using System.Data;
+using System.Diagnostics;
+using Bee.Repository;
 
 namespace Bee.Controllers
 {
     public class SuppliersController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private IWebHostEnvironment _webHostEnvironment;
+        private readonly ISupplier _supplier;
 
-        public SuppliersController(ApplicationDbContext context)
+        public SuppliersController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment, ISupplier supplier)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
+            _supplier = supplier;
         }
 
         // GET: Suppliers
@@ -34,6 +43,28 @@ namespace Bee.Controllers
             }
 
             return View(await supplier.ToListAsync());
+        }
+
+        public IActionResult Import()
+        {
+            return View();
+        }
+
+        public IActionResult ImportConfirmation()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ImportConfirmation(IFormFile formFile)
+        {
+            string path = _supplier.DocumentUpload(formFile);
+            DataTable dt = _supplier.SupplierDataTable(path);
+            _supplier.ImportSupplier(dt);
+
+            //return RedirectToAction(nameof(Index));
+
+            return View();
         }
 
         // GET: Suppliers/Details/5

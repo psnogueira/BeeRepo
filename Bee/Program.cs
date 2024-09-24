@@ -14,6 +14,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 // Add services to the container for import data from Excel file to database.
 builder.Services.AddScoped<ICompany, CompanyDetail>();
+builder.Services.AddScoped<IFranchise, FranchiseDetail>();
+builder.Services.AddScoped<ISupplier, SupplierDetail>();
 
 // Substitui AddDefaultIdentity por AddIdentity que é uma forma mais detalhada possibilitando habilitar o gerencimaneto de Roles e usa como base ApplicationUser em vez de IdentityUser
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
