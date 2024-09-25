@@ -22,6 +22,11 @@ namespace Bee.Repository
         }
         public string DocumentUpload(IFormFile formFile)
         {
+            if (formFile == null || formFile.Length == 0)
+            {
+                throw new Exception("File not selected");
+            }
+
             string uploadPath = _webHostEnvironment.WebRootPath;
             string dest_path = Path.Combine(uploadPath, "uploaded_doc");
             if (!Directory.Exists(dest_path))

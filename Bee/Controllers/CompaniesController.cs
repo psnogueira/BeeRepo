@@ -130,9 +130,21 @@ namespace Bee.Controllers
 
             // The data is inserted into the database using the following code:
 
-            string path = _company.DocumentUpload(formFile);
-            DataTable dt = _company.CompanyDataTable(path);
-            _company.ImportCompany(dt);
+            string path;
+            DataTable dt;
+
+            try
+            {
+                path = _company.DocumentUpload(formFile);
+                dt = _company.CompanyDataTable(path);
+                _company.ImportCompany(dt); ;
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("Arquivo", "Erro ao ler o arquivo.");
+
+                return RedirectToAction(nameof(Import));
+            }
 
             //return RedirectToAction(nameof(Index));
 

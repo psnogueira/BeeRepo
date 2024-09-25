@@ -12,6 +12,7 @@ using ExcelDataReader;
 using System.Data;
 using System.Diagnostics;
 using Bee.Repository;
+using Bee.Data.Migrations;
 
 namespace Bee.Controllers
 {
@@ -58,9 +59,21 @@ namespace Bee.Controllers
         [HttpPost]
         public IActionResult ImportConfirmation(IFormFile formFile)
         {
-            string path = _supplier.DocumentUpload(formFile);
-            DataTable dt = _supplier.SupplierDataTable(path);
-            _supplier.ImportSupplier(dt);
+            string path;
+            DataTable dt;
+
+            try
+            {
+                path = _supplier.DocumentUpload(formFile);
+                dt = _supplier.SupplierDataTable(path);
+                _supplier.ImportSupplier(dt);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("Arquivo", "Erro ao ler o arquivo.");
+
+                return RedirectToAction(nameof(Import));
+            }
 
             //return RedirectToAction(nameof(Index));
 

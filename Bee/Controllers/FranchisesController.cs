@@ -59,10 +59,22 @@ namespace Bee.Controllers
         [HttpPost]
         public IActionResult ImportConfirmation(IFormFile formFile)
         {
-            string path = _franchise.DocumentUpload(formFile);
-            DataTable dt = _franchise.FranchiseDataTable(path);
-            _franchise.ImportFranchise(dt);
+            string path;
+            DataTable dt;
 
+            try
+            {
+                path = _franchise.DocumentUpload(formFile);
+                dt = _franchise.FranchiseDataTable(path);
+                _franchise.ImportFranchise(dt);
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("Arquivo", "Erro ao ler o arquivo.");
+
+                return RedirectToAction(nameof(Import));
+            }
+            
             //return RedirectToAction(nameof(Index));
 
             return View();
