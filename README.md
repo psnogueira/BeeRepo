@@ -2,7 +2,7 @@
 
 **Bee** é uma solução de análise de dados desenvolvida para facilitar o acesso e visualização de informações empresariais através de uma aplicação web. 
 
-Este projeto utiliza tecnologias modernas como: 
+Este projeto utiliza: 
 - **ASP.NET Core**,
 - **SQL Server**;
 - **Power BI**
