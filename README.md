@@ -111,7 +111,6 @@ Bee/
 
 #### 8. **Repository**
    Esta pasta armazena o **padrão Repository**, que abstrai a lógica de acesso a dados e facilita o gerenciamento dos dados. O uso de repositórios separa as consultas ao banco de dados da lógica de negócios e permite a troca mais fácil da camada de persistência (como mudar o banco de dados).
-   - Aqui, você pode encontrar implementações de repositórios para cada entidade do projeto (ex: `UserRepository`, `ProductRepository`).
 
 #### 9. **Views**
    Armazena as **Views** do padrão MVC, que são responsáveis pela apresentação dos dados ao usuário. As Views contêm arquivos `.cshtml`, que são páginas HTML combinadas com a linguagem de marcação **Razor**, permitindo que você insira código C# diretamente nas páginas HTML.
