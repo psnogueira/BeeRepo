@@ -60,4 +60,4 @@ A aplicação permite que os usuários:
 
 ## Licença
 
-Este projeto está licenciado sob a [MIT License](LICENSE).
+
